@@ -12,6 +12,7 @@
 
 - Each tab should return different data
 - Might not be too much data to return everything all the time though
+- Reload tab on pull down
 
 ### Introduction Screens
 

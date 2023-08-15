@@ -1,3 +1,4 @@
+import { Linking } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
@@ -40,6 +41,14 @@ const HomePage = () => {
           onPress={() => navigation.navigate("Register")}
         >
           <Text style={styles.buttonText}>sign up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button_register}
+          onPress={() =>
+            Linking.openURL("https://members.oystergroup.org/user/dashboard")
+          }
+        >
+          <Text style={styles.buttonText}>Go to ostudy</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

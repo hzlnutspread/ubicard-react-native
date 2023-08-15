@@ -1,13 +1,8 @@
+import { Ionicons } from "@expo/vector-icons";
+import { UserProvider } from "./src/contexts/UserContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-import { UserProvider } from "./src/contexts/UserContext";
-
-import { Ionicons } from "@expo/vector-icons";
-
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
 
 import HomePage from "./src/Index";
 import LoginPage from "./src/Login";
@@ -17,6 +12,10 @@ import DashboardPage from "./src/User/Dashboard";
 import ProfilePage from "./src/User/Profile";
 import CardPage from "./src/User/Card";
 import InfoPage from "./src/User/Info";
+import IntroductionPages from "./src/User/Introduction";
+
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function UserTabs() {
   return (
@@ -126,6 +125,11 @@ function App() {
             options={{
               headerShown: false,
             }}
+          />
+          <Stack.Screen
+            name="IntroductionPages"
+            component={IntroductionPages}
+            options={{ headerShown: true }}
           />
         </Stack.Navigator>
       </NavigationContainer>

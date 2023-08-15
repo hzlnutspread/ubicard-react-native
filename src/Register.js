@@ -80,6 +80,7 @@ const RegisterPage = () => {
     if (sanitizeData.password !== confirmPassword) {
       setErrorMessage("passwords do not match");
     }
+    console.log(sanitizedData);
   };
 
   return (

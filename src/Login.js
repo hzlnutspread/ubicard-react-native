@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { validateUser } from "./utils/userUtils";
-import { useUser } from "./contexts/UserContext";
 import { useNavigation } from "@react-navigation/native";
-import { useTabPressListener } from "./utils/useTabPressListener";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
@@ -15,13 +12,11 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
   ScrollView,
   Platform,
 } from "react-native";
 
 const LoginPage = () => {
-  const { setUserData } = useUser();
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,16 +27,6 @@ const LoginPage = () => {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [emailBorderColor, setEmailBorderColor] = useState("#FFFFFF");
   const [passwordBorderColor, setPasswordBorderColor] = useState("#FFFFFF");
-
-  const fetchData = async () => {
-    const data = await validateUser();
-    if (data) {
-      setUserData(data);
-      console.log("successfully fetched initial data");
-    }
-  };
-
-  useTabPressListener(fetchData);
 
   const validateEmail = (email) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -102,8 +87,14 @@ const LoginPage = () => {
         } else if (data.is_admin) {
           navigation.navigate("/admin/dashboard/");
         } else {
-          await fetchData();
-          navigation.reset({ index: 0, routes: [{ name: "UserTabs" }] });
+          if (data.watched_intro == true) {
+            navigation.reset({ index: 0, routes: [{ name: "UserTabs" }] });
+          } else {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "IntroductionPages" }],
+            });
+          }
         }
       } else {
         const errorData = await response.json();
