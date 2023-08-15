@@ -93,12 +93,6 @@ function UserTabs() {
             />
           ),
         }}
-        // listeners={({ route }) => ({
-        //   tabPress: async (e) => {
-        //     const data = await validateUser(navigation);
-        //     console.log(data);
-        //   },
-        // })}
       />
     </Tab.Navigator>
   );

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useTabPressListener } from "./utils/useTabPressListener";
-import { useUser } from "./contexts/UserContext";
 import { validateUser } from "./utils/userUtils";
+import { useUser } from "./contexts/UserContext";
+import { useNavigation } from "@react-navigation/native";
+import { useTabPressListener } from "./utils/useTabPressListener";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   View,
   StyleSheet,
