@@ -13,9 +13,8 @@ import {
 
 const RegisterPage = () => {
   const navigation = useNavigation();
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",

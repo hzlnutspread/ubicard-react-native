@@ -1,15 +1,20 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native";
 import { useUser } from "../contexts/UserContext";
-import { useEffect } from "react";
+import { validateUserDashboard } from "../utils/userUtils";
+import { StyleSheet, Text, SafeAreaView } from "react-native";
 import { useTabPressListener } from "../utils/useTabPressListener";
 
 const DashboardPage = () => {
-  const { userData, setUserData } = useUser();
-  const { fetchData } = useTabPressListener();
+  const { userData } = useUser();
+  const [isLoading, setIsLoading] = useState(true);
+  const { fetchData } = useTabPressListener(validateUserDashboard);
 
   useEffect(() => {
     (async function () {
+      setIsLoading(true);
       await fetchData();
+      setIsLoading(false);
       if (!userData) {
         return <Text>Error loading data or no data available.</Text>;
       }
@@ -18,13 +23,10 @@ const DashboardPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.body_text}>
-        Dashboard Page for {userData.user.first_name}
-      </Text>
-      {userData.user.scanned_in ? (
-        <Text style={styles.body_text}>You are scanned in</Text>
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#0A9B97" />
       ) : (
-        <Text style={styles.body_text}>You are scanned out</Text>
+        <Text style={styles.body_text}>{userData.message}</Text>
       )}
     </SafeAreaView>
   );

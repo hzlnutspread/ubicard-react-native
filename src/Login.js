@@ -21,17 +21,17 @@ import {
 } from "react-native";
 
 const LoginPage = () => {
-  const navigation = useNavigation();
   const { setUserData } = useUser();
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isValidEmail, setIsValidEmail] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const [emailFocused, setEmailFocused] = useState(false);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [emailBorderColor, setEmailBorderColor] = useState("#FFFFFF");
   const [passwordBorderColor, setPasswordBorderColor] = useState("#FFFFFF");
-  const [showPassword, setShowPassword] = useState(false);
-  const [isValidEmail, setIsValidEmail] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const fetchData = async () => {
     const data = await validateUser();

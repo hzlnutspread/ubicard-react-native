@@ -1,14 +1,13 @@
 import { useEffect } from "react";
-import { useNavigation } from "@react-navigation/native";
 import { useUser } from "../contexts/UserContext";
-import { validateUser } from "./userUtils";
+import { useNavigation } from "@react-navigation/native";
 
-export const useTabPressListener = (callback) => {
+export const useTabPressListener = (validateFunction) => {
   const navigation = useNavigation();
-  const { userData, setUserData } = useUser();
+  const { setUserData } = useUser();
 
   const fetchData = async () => {
-    const data = await validateUser(navigation);
+    const data = await validateFunction(navigation);
     if (data) {
       setUserData(data);
       console.log(data);

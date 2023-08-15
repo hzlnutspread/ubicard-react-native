@@ -1,15 +1,20 @@
-import { StyleSheet, Text, SafeAreaView } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator } from "react-native";
 import { useUser } from "../contexts/UserContext";
-import { useEffect } from "react";
+import { validateUserInfo } from "../utils/userUtils";
+import { StyleSheet, Text, SafeAreaView } from "react-native";
 import { useTabPressListener } from "../utils/useTabPressListener";
 
-const InfoPage = () => {
-  const { userData, setUserData } = useUser();
-  const { fetchData } = useTabPressListener();
+const InfoCard = () => {
+  const { userData } = useUser();
+  const [isLoading, setIsLoading] = useState(true);
+  const { fetchData } = useTabPressListener(validateUserInfo);
 
   useEffect(() => {
     (async function () {
+      setIsLoading(true);
       await fetchData();
+      setIsLoading(false);
       if (!userData) {
         return <Text>Error loading data or no data available.</Text>;
       }
@@ -18,19 +23,16 @@ const InfoPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.body_text}>
-        Info Page for {userData.user.first_name}
-      </Text>
-      {userData.user.scanned_in ? (
-        <Text style={styles.body_text}>You are scanned in</Text>
+      {isLoading ? (
+        <ActivityIndicator size="large" color="#0A9B97" />
       ) : (
-        <Text style={styles.body_text}>You are scanned out</Text>
+        <Text style={styles.body_text}>{userData.message}</Text>
       )}
     </SafeAreaView>
   );
 };
 
-export default InfoPage;
+export default InfoCard;
 
 const styles = StyleSheet.create({
   container: {
