@@ -129,7 +129,7 @@ function App() {
           <Stack.Screen
             name="IntroductionPages"
             component={IntroductionPages}
-            options={{ headerShown: true }}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

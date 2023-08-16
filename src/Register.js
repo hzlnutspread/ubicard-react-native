@@ -31,35 +31,13 @@ const RegisterPage = () => {
     return password.length >= 5;
   };
 
-  const sanitizeData = (data) => {
-    const sanitizedData = {};
-    for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        const value = data[key];
-        if (typeof value === "string") {
-          sanitizedData[key] = value.trim().toLowerCase();
-        } else {
-          sanitizedData[key] = value;
-        }
-      }
-    }
-    return sanitizedData;
-  };
-
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    const sanitizedData = sanitizeData({
-      first_name: formData.first_name,
-      last_name: formData.last_name,
-      email: formData.email,
-      password: formData.password,
-    });
-
     if (
-      !formData.first_name ||
-      !formData.last_name ||
-      !formData.email ||
+      !formData.first_name.trim() ||
+      !formData.last_name.trim() ||
+      !formData.email.trim() ||
       !formData.password ||
       !confirmPassword
     ) {
@@ -67,20 +45,54 @@ const RegisterPage = () => {
       return;
     }
 
-    if (!validateEmail(sanitizedData.email)) {
+    if (!validateEmail(formData.email)) {
       setErrorMessage("Please enter a valid email address");
       return;
     }
 
-    if (!validatePassword(sanitizedData.password)) {
+    if (!validatePassword(formData.password)) {
       setErrorMessage("Password must be at least 5 characters long");
       return;
     }
 
-    if (sanitizeData.password !== confirmPassword) {
-      setErrorMessage("passwords do not match");
+    if (formData.password !== confirmPassword) {
+      setErrorMessage("Passwords do not match");
+      return;
     }
-    console.log(sanitizedData);
+
+    const sanitizedData = {
+      first_name: formData.first_name.trim().toLowerCase(),
+      last_name: formData.last_name.trim().toLowerCase(),
+      email: formData.email.trim().toLowerCase(),
+      password: formData.password,
+    };
+
+    try {
+      const response = await fetch(
+        "https://api.oystergroup.org/flask/user/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(sanitizedData),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setErrorMessage(errorData.error);
+        navigation.navigate("Register");
+      } else {
+        console.log("success");
+        navigation.navigate("Login");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setErrorMessage(
+        "An error occurred while registering. Please try again later."
+      );
+    }
   };
 
   return (

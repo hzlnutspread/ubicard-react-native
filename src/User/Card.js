@@ -26,7 +26,9 @@ const CardPage = () => {
       {isLoading ? (
         <ActivityIndicator size="large" color="#0A9B97" />
       ) : (
-        <Text style={styles.body_text}>{userData.message}</Text>
+        <Text style={styles.body_text}>
+          {userData.message} for {userData.user.first_name}
+        </Text>
       )}
     </SafeAreaView>
   );
