@@ -7,14 +7,11 @@ import { useTabPressListener } from "../utils/useTabPressListener";
 
 const DashboardPage = () => {
   const { userData } = useUser();
-  const [isLoading, setIsLoading] = useState(true);
-  const { fetchData } = useTabPressListener(validateUserDashboard);
+  const { isLoading, fetchData } = useTabPressListener(validateUserDashboard);
 
   useEffect(() => {
     (async function () {
-      setIsLoading(true);
       await fetchData();
-      setIsLoading(false);
       if (!userData) {
         return <Text>Error loading data or no data available.</Text>;
       }
@@ -27,7 +24,9 @@ const DashboardPage = () => {
         <ActivityIndicator size="large" color="#0A9B97" />
       ) : (
         <Text style={styles.body_text}>
-          {userData.message} for {userData.user.first_name}
+          {userData
+            ? `${userData.message} for ${userData.user.first_name}`
+            : "Error loading data or no data available."}
         </Text>
       )}
     </SafeAreaView>

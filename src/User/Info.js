@@ -7,17 +7,11 @@ import { useTabPressListener } from "../utils/useTabPressListener";
 
 const InfoCard = () => {
   const { userData } = useUser();
-  const [isLoading, setIsLoading] = useState(true);
-  const { fetchData } = useTabPressListener(validateUserInfo);
+  const { isLoading, fetchData } = useTabPressListener(validateUserInfo);
 
   useEffect(() => {
     (async function () {
-      setIsLoading(true);
       await fetchData();
-      setIsLoading(false);
-      if (!userData) {
-        return <Text>Error loading data or no data available.</Text>;
-      }
     })();
   }, []);
 
