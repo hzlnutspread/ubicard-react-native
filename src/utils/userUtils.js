@@ -5,7 +5,10 @@ export const validateUser = async (navigation) => {
     const jwtToken = await AsyncStorage.getItem("access_token_cookie");
 
     if (!jwtToken) {
-      navigation.navigate("Login");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
       return null;
     }
 
@@ -22,7 +25,10 @@ export const validateUser = async (navigation) => {
     );
 
     if (response.status === 401) {
-      navigation.navigate("Login");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
       return null;
     } else {
       const data = await response.json();
@@ -39,7 +45,10 @@ export const validateUserPoints = async (navigation) => {
     const jwtToken = await AsyncStorage.getItem("access_token_cookie");
 
     if (!jwtToken) {
-      navigation.navigate("Login");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
       return null;
     }
 
@@ -56,7 +65,10 @@ export const validateUserPoints = async (navigation) => {
     );
 
     if (response.status === 401) {
-      navigation.navigate("Login");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
       return null;
     } else {
       const data = await response.json();
@@ -90,7 +102,10 @@ const validateUserWithEndpoint = async (navigation, endpoint) => {
     const jwtToken = await AsyncStorage.getItem("access_token_cookie");
 
     if (!jwtToken) {
-      navigation.navigate("Login");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
       return null;
     }
 
@@ -107,7 +122,10 @@ const validateUserWithEndpoint = async (navigation, endpoint) => {
     );
 
     if (response.status === 401) {
-      navigation.navigate("Login");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      });
       return null;
     } else {
       const data = await response.json();

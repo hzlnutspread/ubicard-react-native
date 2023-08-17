@@ -18,7 +18,10 @@ const IntroductionPages = () => {
     try {
       const jwtToken = await AsyncStorage.getItem("access_token_cookie");
       if (!jwtToken) {
-        navigation.navigate("Login");
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Login" }],
+        });
         return null;
       }
 
